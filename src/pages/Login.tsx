@@ -1,6 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { ChakraProvider } from "@chakra-ui/react";
-import { FormControl, FormLabel, Flex, Input, Button } from "@chakra-ui/react";
+import {
+  FormControl,
+  FormLabel,
+  Flex,
+  Input,
+  Button,
+  Img,
+  Text,
+} from "@chakra-ui/react";
 import { useState } from "react";
 
 export default function Login() {
@@ -18,8 +25,23 @@ export default function Login() {
   }
 
   return (
-    <ChakraProvider>
-      <Flex width="100vw" justifyContent="center" alignItems="center">
+    <Flex>
+      <Flex flex={1} justifyContent="center" alignItems="center">
+        <Flex
+          flexDirection={"column"}
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Img src="./loginIMG.png" alt="Pessoas" />
+          <Text color={"#330693"} fontSize={40} fontWeight={"700"}>
+            Bem vindo ao PontoGo
+          </Text>
+          <Text fontSize={25} fontWeight={"400"}>
+            Aqui você fará toda gestão do seu sistema de pontos.
+          </Text>
+        </Flex>
+      </Flex>
+      <Flex width="100vw" justifyContent="center" alignItems="center" flex={1}>
         <Flex height="100vh" justifyContent="center" alignItems="center">
           <FormControl isRequired>
             <Flex justifyContent="center" alignItems="center">
@@ -57,6 +79,6 @@ export default function Login() {
           </FormControl>
         </Flex>
       </Flex>
-    </ChakraProvider>
+    </Flex>
   );
 }

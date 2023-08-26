@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useQuery } from "@apollo/client";
-import { Link } from "react-router-dom";
 import { TIMES_REGISTREDS } from "../graphql";
-import { formatDateTime } from "../utils/dateFormater";
+import { formatDate, formatDateTime, formatTime } from "../utils/dateFormater";
 import {
   Table,
   Thead,
@@ -11,54 +10,57 @@ import {
   Tr,
   Th,
   Td,
-  TableCaption,
   TableContainer,
   Button,
   Flex,
-  Text,
+  background,
+  Stack,
 } from "@chakra-ui/react";
+import Sidebar from "../components/Sidebar";
 
 export default function Dashboard() {
   const { data: times } = useQuery(TIMES_REGISTREDS);
 
   return (
-    <>
-      <Flex justifyContent="space-between" alignItems="center" margin={10}>
-        <Button colorScheme="teal">
-          <Link to={"/"}>Voltar</Link>
-        </Button>
-        <Text fontSize={30}>Área do Administrador</Text>
-        <span></span>
-      </Flex>
-      <TableContainer
-        maxWidth={"70%"}
-        margin={"auto"}
-        padding={3}
-        borderRadius={10}
-        border={"1px solid #e2e8f0"}
-      >
-        <Table variant="striped" colorScheme="teal">
-          <TableCaption>Pontos batidos dos colaboradores</TableCaption>
-          <Thead>
-            <Tr>
-              <Th>Colaborador</Th>
-              <Th>Horário do Ponto</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {times?.registeredTimes.map((time: any) => (
+    <Flex backgroundColor={"#f2f2f2"}>
+      <Sidebar />
+      <Flex flexDirection={"column"} width={"100%"} marginLeft={"180px"}>
+        <TableContainer marginBottom={10} marginLeft={"20px"}>
+          <Table variant={"unstyled"}>
+            <Thead>
               <Tr>
-                <Td key={time.id}>{time?.user?.name ?? "Colaborador Nulo"}</Td>
-                <Td key={time.id}>
-                  {time.timeRegistered === null
-                    ? "Tempo não batido"
-                    : formatDateTime(time.timeRegistered)}
-                </Td>
+                <Th>Colaborador</Th>
+                <Th>Data</Th>
+                <Th>Hora</Th>
               </Tr>
-            ))}
-          </Tbody>
-        </Table>
-      </TableContainer>
-    </>
+            </Thead>
+            <Tbody>
+              {times?.registeredTimes.map((time: any) => (
+                <Tr
+                  backgroundColor={"white"}
+                  borderLeft={"5px solid #8A53FF"}
+                  as="div"
+                  style={{ marginBottom: "1rem" }}
+                >
+                  <Td key={time.id}>
+                    {time?.user?.name ?? "Colaborador Nulo"}
+                  </Td>
+                  <Td key={time.id}>
+                    {time.timeRegistered === null
+                      ? "Data nula"
+                      : formatDate(time.timeRegistered)}
+                  </Td>
+                  <Td key={time.id}>
+                    {time.timeRegistered === null
+                      ? "Tempo não batido"
+                      : formatTime(time.timeRegistered)}
+                  </Td>
+                </Tr>
+              ))}
+            </Tbody>
+          </Table>
+        </TableContainer>
+      </Flex>
+    </Flex>
   );
 }
