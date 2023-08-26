@@ -27,18 +27,37 @@ export const LOGIN_MUTATION = gql`
 mutation Login($email: String!, $password: String!){
   login(input: {identifier: $email, password: $password}) {
     jwt
+    user {
+      id
+    }
   }
 }
 `;
 
 export const TIMES_REGISTREDS = gql`
-  query {
-    registeredTimes {
-      id
-    	timeRegistered
-    	user {
-      id name
+    query {
+      registeredTimes {
+        id
+    	  timeRegistered
+    	  user {
+        id 
+        name
+      }
     }
   }
+`
+
+export const CREATE_TIME = gql`
+  mutation CreateTime($timeRegistered: DateTime!, $userId: ID!){
+    createRegisteredTime(input: {data: {timeRegistered: $timeRegistered, user: $userId}}) {
+    	registeredTime {
+				id
+        user {
+					id
+          name
+        }
+        timeRegistered
+      }
+    }
   }
 `

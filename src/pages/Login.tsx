@@ -1,26 +1,17 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useMutation } from "@apollo/client";
 import { ChakraProvider } from "@chakra-ui/react";
 import { FormControl, FormLabel, Flex, Input, Button } from "@chakra-ui/react";
 import { useState } from "react";
-import { LOGIN_MUTATION } from "../graphql";
 
 export default function Login() {
   const [email, setEmail] = useState("admin@brainny.cc");
   const [password, setPassword] = useState("adminregister");
 
-  const [doLogin, { error }] = useMutation(LOGIN_MUTATION);
+  const [loading, setLoading] = useState(false);
 
   async function submitForm() {
-    if (error) {
-      console.log(error);
-    }
-
     try {
-      const { data } = await doLogin({ variables: { email, password } });
-      const jwt = data.login.jwt;
-      console.log(jwt);
-      localStorage.setItem("token", jwt);
+      setLoading(true);
     } catch (error) {
       console.error("Erro ao fazer login:", error);
     }
@@ -55,7 +46,11 @@ export default function Login() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <Button colorScheme="teal" onClick={submitForm}>
+              <Button
+                colorScheme="teal"
+                isLoading={loading}
+                onClick={submitForm}
+              >
                 Login
               </Button>
             </Flex>

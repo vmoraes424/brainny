@@ -6,6 +6,9 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Dashboard from "./pages/Dashboard.tsx";
 import App from "./App.tsx";
 import Login from "./pages/Login.tsx";
+import { ChakraProvider } from "@chakra-ui/react";
+import MeusRegistros from "./pages/MeusRegistros.tsx";
+import AuthProvider from "./contexts/AuthContext.tsx";
 
 const router = createBrowserRouter([
   {
@@ -20,10 +23,18 @@ const router = createBrowserRouter([
     path: "/login",
     element: <Login />,
   },
+  {
+    path: "/meus-registros",
+    element: <MeusRegistros />,
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <ApolloProvider client={client}>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <ChakraProvider>
+        <RouterProvider router={router} />
+      </ChakraProvider>
+    </AuthProvider>
   </ApolloProvider>
 );
