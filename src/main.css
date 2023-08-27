@@ -1,3 +1,26 @@
 :root {
   --principal-color: #330693;
+  --secundary-color: #8a53ff;
+  --linha-input-card: rgba(32, 41, 46, 0.3);
+  --grey: #20292e;
+}
+html {
+  background-color: #f2f2f2;
+}
+table {
+  border-spacing: 0 1rem;
+  border-collapse: separate !important;
+  text-align: left;
+}
+
+.user-table-tr {
+  border: 1px solid var(--linha-input-card);
+}
+
+.td-span {
+  width: 5px;
+  height: 45px;
+  margin-right: 3rem;
+  border-radius: 30px;
+  background: var(--secundary-color, #8a53ff);
 }

@@ -7,7 +7,6 @@ const theme = extendTheme({
         fontWeight: '400',
 
       },
-      // 2. We can add a new button size or extend existing
       sizes: {
         xl: {
           h: '56px',

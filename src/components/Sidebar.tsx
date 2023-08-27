@@ -1,5 +1,6 @@
 import { Button, Divider, Flex, Img } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
+import SidebarButton from "./SidebarButton";
 
 export default function Sidebar() {
   return (
@@ -13,23 +14,17 @@ export default function Sidebar() {
     >
       <Img src="./pontogo.svg" margin={30} />
       <Divider />
-      <Flex position={"relative"}>
-        <Button
-          colorScheme="teal"
-          variant={"link"}
-          borderRadius={"none"}
-          padding={30}
-          color={"#330693"}
-          borderLeft={"4px solid #330693"}
-        >
-          <Flex alignItems={"center"} gap={2}>
-            <Img src="./dashboard.svg" width={8} />
-            <Link to={"/dashboard"}>Dashboard</Link>
-          </Flex>
-        </Button>
-        {/* <Button colorScheme="teal" variant={"link"}>
-        <Link to={"/meus-registros"}>Meus Pontos</Link>
-      </Button> */}
+      <Flex position={"relative"} flexDirection={"column"}>
+        <SidebarButton
+          imgSrc="./dashboard.svg"
+          link="/dashboard"
+          text="Dashboard"
+        />
+        <SidebarButton
+          imgSrc="./notepad.svg"
+          link="/meus-registros"
+          text="Meus Registros"
+        />
       </Flex>
       <Flex position={"absolute"} bottom={0} margin={5}>
         <Img src="./sair.svg" />

@@ -10,7 +10,7 @@ import {
 import { useMutation } from "@apollo/client";
 import { CREATE_TIME, TIMES_REGISTREDS } from "../graphql";
 import { useToast } from "@chakra-ui/react";
-import UserTable from "../components/UserTable";
+import UserTable from "../components/Table";
 import Sidebar from "../components/Sidebar";
 
 export default function MeusRegistros() {
@@ -53,7 +53,7 @@ export default function MeusRegistros() {
             Registrar ponto
           </Button>
         </Flex>
-        <UserTable />
+        <UserTable filtered={true} />
         <Modal onClose={onClose} isOpen={isOpen} isCentered>
           <ModalOverlay />
           <ModalContent
@@ -78,6 +78,7 @@ export default function MeusRegistros() {
                 fontSize={"lg"}
                 color={"var(--principal-color)"}
                 fontWeight={"400"}
+                opacity={"0.5"}
               >
                 {currentDateFormatted}
               </Text>
