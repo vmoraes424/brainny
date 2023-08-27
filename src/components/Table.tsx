@@ -39,20 +39,23 @@ export default function UserTable({ filtered }: TableProps) {
   const { data } = useQuery(TIMES_REGISTREDS);
   const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 8;
-  const indexOfLastUser = currentPage * usersPerPage;
-  const indexOfFirstUser = indexOfLastUser - usersPerPage;
-  const currentUsers = data?.registeredTimes.slice(
-    indexOfFirstUser,
-    indexOfLastUser
-  );
 
-  const filteredUser = data?.registeredTimes.filter(
+  const reversedRegisteredTimes = [...(data?.registeredTimes || [])].reverse();
+
+  const filteredUser = reversedRegisteredTimes.filter(
     (user: RegisteredUser) => user?.user?.id === "3"
   );
 
-  const organizedFilteredUser = filtered
-    ? filteredUser?.slice().reverse()
-    : currentUsers;
+  const indexOfLastUser = currentPage * usersPerPage;
+  const indexOfFirstUser = indexOfLastUser - usersPerPage;
+
+  const currentUsers = filtered
+    ? filteredUser.slice(indexOfFirstUser, indexOfLastUser)
+    : reversedRegisteredTimes.slice(indexOfFirstUser, indexOfLastUser);
+
+  const totalUsers = filtered
+    ? filteredUser.length
+    : reversedRegisteredTimes.length;
 
   function paginate(pageNumber: number) {
     setCurrentPage(pageNumber);
@@ -75,7 +78,7 @@ export default function UserTable({ filtered }: TableProps) {
           </Tr>
         </Thead>
         <Tbody>
-          {organizedFilteredUser?.map((time: RegisteredTime, idx: number) => (
+          {currentUsers?.map((time: RegisteredTime, idx: number) => (
             <Tr key={idx} bg={"white"} className="user-table-tr">
               <Td>
                 <Flex>
@@ -113,7 +116,8 @@ export default function UserTable({ filtered }: TableProps) {
         </Tbody>
       </Table>
       <Pagination
-        totalUsers={data?.registeredTimes.length ?? 0}
+        totalUsers={totalUsers}
+        currentPage={currentPage}
         usersPerPage={usersPerPage}
         paginate={paginate}
       />
