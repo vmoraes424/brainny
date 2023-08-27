@@ -9,6 +9,8 @@ import Login from "./pages/Login.tsx";
 import { ChakraProvider } from "@chakra-ui/react";
 import MeusRegistros from "./pages/MeusRegistros.tsx";
 import AuthProvider from "./contexts/AuthContext.tsx";
+import theme from "./theme.ts";
+import "./main.css";
 
 const router = createBrowserRouter([
   {
@@ -32,7 +34,7 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <ApolloProvider client={client}>
     <AuthProvider>
-      <ChakraProvider>
+      <ChakraProvider theme={theme}>
         <RouterProvider router={router} />
       </ChakraProvider>
     </AuthProvider>

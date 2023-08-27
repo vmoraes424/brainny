@@ -5,10 +5,9 @@ import {
   Tr,
   Th,
   Td,
-  TableCaption,
   TableContainer,
 } from "@chakra-ui/react";
-import { formatDateTime } from "../utils/dateFormater";
+import { formatDate, formatTime } from "../utils/dateFormater";
 import { useQuery } from "@apollo/client";
 import { TIMES_REGISTREDS } from "../graphql";
 
@@ -34,19 +33,13 @@ export default function UserTable() {
     (user: RegisteredUser) => user?.user?.id === "3"
   );
   return (
-    <TableContainer
-      maxWidth={"50%"}
-      margin={"auto"}
-      padding={3}
-      borderRadius={10}
-      border={"1px solid #e2e8f0"}
-    >
+    <TableContainer padding={3}>
       <Table variant="striped" colorScheme="teal">
-        <TableCaption>Seus pontos</TableCaption>
         <Thead>
           <Tr>
             <Th>Colaborador</Th>
-            <Th>Horário do Ponto</Th>
+            <Th>Data</Th>
+            <Th>Hora</Th>
           </Tr>
         </Thead>
         <Tbody>
@@ -55,8 +48,13 @@ export default function UserTable() {
               <Td key={time.id}>{time?.user?.name ?? "Colaborador Nulo"}</Td>
               <Td key={time.id}>
                 {time.timeRegistered === null
-                  ? "Tempo não batido"
-                  : formatDateTime(time.timeRegistered)}
+                  ? "Tempo nulo"
+                  : formatDate(time.timeRegistered)}
+              </Td>
+              <Td key={time.id}>
+                {time.timeRegistered === null
+                  ? "Hora nula"
+                  : formatTime(time.timeRegistered)}
               </Td>
             </Tr>
           ))}

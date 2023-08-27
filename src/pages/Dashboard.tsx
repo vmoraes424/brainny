@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useQuery } from "@apollo/client";
 import { TIMES_REGISTREDS } from "../graphql";
-import { formatDate, formatDateTime, formatTime } from "../utils/dateFormater";
+import { formatDate, formatTime } from "../utils/dateFormater";
 import {
   Table,
   Thead,
@@ -52,7 +52,7 @@ export default function Dashboard() {
                   </Td>
                   <Td key={time.id}>
                     {time.timeRegistered === null
-                      ? "Tempo não batido"
+                      ? "Tempo nulo"
                       : formatTime(time.timeRegistered)}
                   </Td>
                 </Tr>
