@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { EyeFilled, EyeInvisibleFilled } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
+import { onError } from "@apollo/client/link/error";
 import {
   FormControl,
   FormLabel,
@@ -14,24 +16,71 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useMutation } from "@apollo/client";
+import { LOGIN_MUTATION } from "../graphql";
 
 export default function Login() {
-  const [email, setEmail] = useState("admin@brainny.cc");
-  const [password, setPassword] = useState("adminregister");
-
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [show, setShow] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const handleClick = () => setShow(!show);
 
-  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const [doLogin] = useMutation(LOGIN_MUTATION);
+
+  const userInfo = {
+    jwt: "",
+    role: "",
+    userId: "",
+  };
+
+  const errorLink = onError(({ graphQLErrors, networkError }) => {
+    if (graphQLErrors)
+      graphQLErrors.forEach(({ message, locations, path }) =>
+        console.log(
+          `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
+        )
+      );
+    if (networkError) console.log(`[Network error]: ${networkError}`);
+  });
+
+  async function loginHandler() {
+    try {
+      const { data } = await doLogin({ variables: { email, password } });
+      const jwt = data.login.jwt;
+      const role = data.login.user.role.name;
+      const userId = data.login.user.id;
+      userInfo.jwt = jwt;
+      userInfo.role = role;
+      userInfo.userId = userId;
+      localStorage.setItem("userInfo", JSON.stringify(userInfo));
+      setError("");
+      return userInfo;
+    } catch (error) {
+      setLoading(false);
+      console.error("Erro ao fazer login:", error);
+      console.log(errorLink);
+    }
+  }
 
   async function submitForm() {
     try {
       setLoading(true);
+      const result = await loginHandler();
+
+      if (result && result.role === "admin") {
+        navigate("/dashboard");
+      } else if (result && result.role === "user") {
+        navigate("/meus-registros");
+      }
     } catch (error) {
       console.error("Erro ao fazer login:", error);
+      setLoading(false);
     }
   }
-
   return (
     <Flex fontFamily={"Poppins"}>
       <Flex flex={1} justifyContent="center" alignItems="center">
@@ -41,14 +90,18 @@ export default function Login() {
           alignItems="center"
         >
           <Img src="./loginIMG.png" alt="Pessoas" />
-          <Text color={"#330693"} fontSize={40} fontWeight={"700"}>
+          <Text
+            color={"var(--principal-color)"}
+            fontSize={40}
+            fontWeight={"700"}
+          >
             Bem vindo ao PontoGo
           </Text>
           <Text
             fontSize={"25px"}
             fontWeight={"400"}
             textAlign={"center"}
-            color={"#330693"}
+            color={"var(--principal-color)"}
             opacity={"0.7"}
             width={"400px"}
           >
@@ -62,7 +115,11 @@ export default function Login() {
             <Flex justifyContent="start" alignItems="center">
               <Img src="./pontogo.svg" alt="PontoGo Logo" height={"75px"} />
             </Flex>
-            <Heading color={"#330693"} fontFamily={"Poppins"} my={5}>
+            <Heading
+              color={"var(--principal-color)"}
+              fontFamily={"Poppins"}
+              my={5}
+            >
               Faça login
             </Heading>
             <Flex direction={"column"} gap={3}>
@@ -71,6 +128,7 @@ export default function Login() {
                 type="email"
                 placeholder="exemplo@email.com"
                 value={email}
+                required
                 onChange={(e) => setEmail(e.target.value)}
               />
               <FormLabel>Senha</FormLabel>
@@ -80,6 +138,7 @@ export default function Login() {
                   type={show ? "text" : "password"}
                   placeholder="***************"
                   value={password}
+                  required
                   onChange={(e) => setPassword(e.target.value)}
                 />
                 <InputRightElement width="4.5rem">
@@ -94,20 +153,21 @@ export default function Login() {
                   textDecoration={"underline"}
                   fontWeight={"400"}
                   marginBottom={5}
-                  color={"#330693"}
+                  color={"var(--principal-color)"}
                 >
                   Esqueci minha senha
                 </Button>
               </Link>
               <Button
-                bg={"#330693"}
+                bg={"var(--principal-color)"}
                 color={"white"}
-                _hover={{ bg: "#330693" }}
+                _hover={{ bg: "var(--principal-color)" }}
                 isLoading={loading}
                 onClick={submitForm}
               >
                 Entrar
               </Button>
+              {error && <div style={{ color: "red" }}>{error}</div>}
             </Flex>
           </FormControl>
         </Flex>

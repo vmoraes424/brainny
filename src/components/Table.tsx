@@ -38,12 +38,14 @@ interface TableProps {
 export default function UserTable({ filtered }: TableProps) {
   const { data } = useQuery(TIMES_REGISTREDS);
   const [currentPage, setCurrentPage] = useState(1);
-  const usersPerPage = 8;
+  const usersPerPage = filtered ? 7 : 8;
+
+  const userInfo = JSON.parse(localStorage.getItem("userInfo") || "{}");
 
   const reversedRegisteredTimes = [...(data?.registeredTimes || [])].reverse();
 
   const filteredUser = reversedRegisteredTimes.filter(
-    (user: RegisteredUser) => user?.user?.id === "3"
+    (user: RegisteredUser) => user?.user?.id === userInfo.userId
   );
 
   const indexOfLastUser = currentPage * usersPerPage;
