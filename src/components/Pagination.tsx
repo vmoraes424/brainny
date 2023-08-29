@@ -22,11 +22,13 @@ export default function Pagination({
   return (
     <nav>
       <Flex gap={1}>
-        {currentPage > 1 && (
-          <Button onClick={() => paginate(currentPage - 1)} variant={"outline"}>
-            <Img src="./arrowleft.svg" />
-          </Button>
-        )}
+        <Button
+          onClick={() => paginate(currentPage - 1)}
+          variant={"outline"}
+          isDisabled={currentPage === 1 ? true : false}
+        >
+          <Img src="./arrowleft.svg" />
+        </Button>
         {pageNumbers.map((number) => (
           <Button
             key={number}
@@ -37,11 +39,15 @@ export default function Pagination({
             {number}
           </Button>
         ))}
-        {currentPage < Math.ceil(totalUsers / usersPerPage) && (
-          <Button onClick={() => paginate(currentPage + 1)} variant={"outline"}>
-            <Img src="./arrowright.svg" />
-          </Button>
-        )}
+        <Button
+          onClick={() => paginate(currentPage + 1)}
+          variant={"outline"}
+          isDisabled={
+            currentPage === Math.ceil(totalUsers / usersPerPage) ? true : false
+          }
+        >
+          <Img src="./arrowright.svg" />
+        </Button>
       </Flex>
     </nav>
   );

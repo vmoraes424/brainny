@@ -1,20 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-  TableContainer,
-  Text,
-  Flex,
-} from "@chakra-ui/react";
-import { formatDate, formatTime } from "../utils/dateFormater";
+import { Table, Thead, Tbody, Tr, Th, TableContainer } from "@chakra-ui/react";
 import { useQuery } from "@apollo/client";
 import { TIMES_REGISTREDS } from "../graphql";
 import { useState } from "react";
 import Pagination from "./Pagination";
+import UserTr from "./UserTr";
 
 interface RegisteredUser {
   user: {
@@ -22,7 +12,7 @@ interface RegisteredUser {
   };
 }
 
-interface RegisteredTime {
+export interface RegisteredTime {
   id: number;
   user: {
     id: number;
@@ -81,39 +71,7 @@ export default function UserTable({ filtered }: TableProps) {
         </Thead>
         <Tbody>
           {currentUsers?.map((time: RegisteredTime, idx: number) => (
-            <Tr key={idx} bg={"white"} className="user-table-tr">
-              <Td>
-                <Flex>
-                  <span className="td-span"></span>
-                  <Flex flexDir={"column"}>
-                    <Text
-                      fontSize={"22px"}
-                      fontWeight={"700"}
-                      letterSpacing={"0.44px"}
-                    >
-                      {time?.user?.name ?? "Colaborador Nulo"}
-                    </Text>
-                    <Text color={"var(--grey)"} opacity={"0.6"}>
-                      00{time?.user?.id ?? "ID nulo"}
-                    </Text>
-                  </Flex>
-                </Flex>
-              </Td>
-              <Td>
-                <Text opacity={"0.6"} fontSize={"22px"}>
-                  {time.timeRegistered === null
-                    ? "Tempo nulo"
-                    : formatDate(time.timeRegistered)}
-                </Text>
-              </Td>
-              <Td>
-                <Text opacity={"0.6"} fontSize={"22px"}>
-                  {time.timeRegistered === null
-                    ? "Hora nula"
-                    : formatTime(time.timeRegistered)}
-                </Text>
-              </Td>
-            </Tr>
+            <UserTr idx={idx} time={time} />
           ))}
         </Tbody>
       </Table>
