@@ -1,11 +1,17 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { Flex, Img } from "@chakra-ui/react";
+import { Flex, Img, useBreakpointValue, useMediaQuery } from "@chakra-ui/react";
 import Card, { TypeCard } from "./Card";
 import { useState } from "react";
 
 export default function Slider() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isSmallerThanMd] = useMediaQuery("(max-width: 768px)");
   const cards: TypeCard[] = ["bronze", "prata", "ouro", "platina"];
+
+  const defaultVisibleCardsCount = 1;
+  const visibleCardsCount = useBreakpointValue({
+    lg: defaultVisibleCardsCount,
+    xl: 3,
+  });
 
   function nextCard() {
     setCurrentIndex((currentIndex + 1) % cards.length);
@@ -14,19 +20,24 @@ export default function Slider() {
   function previousCard() {
     setCurrentIndex((currentIndex - 1 + cards.length) % cards.length);
   }
-  const visibleCardsIndices = [
-    currentIndex,
-    (currentIndex + 1) % cards.length,
-    (currentIndex + 2) % cards.length,
-  ];
+
+  const visibleCardsIndices = [];
+  for (
+    let i = currentIndex;
+    i < currentIndex + (visibleCardsCount || defaultVisibleCardsCount);
+    i++
+  ) {
+    visibleCardsIndices.push(i % cards.length);
+  }
   const selectedIndex = visibleCardsIndices[1];
+
   return (
-    <Flex>
-      <Img
-        src="./leftarrow.svg"
-        width={"40px"}
-        onClick={() => previousCard()}
-      />
+    <Flex
+      alignItems="center"
+      justifyContent={"center"}
+      transform={isSmallerThanMd ? "scale(0.8)" : ""}
+    >
+      <Img src="./leftarrow.svg" width={"40px"} onClick={previousCard} />
       {visibleCardsIndices.map((index) => (
         <Card
           key={index}
@@ -34,7 +45,7 @@ export default function Slider() {
           selected={index === selectedIndex}
         />
       ))}
-      <Img src="./rightarrow.svg" width={"40px"} onClick={() => nextCard()} />
+      <Img src="./rightarrow.svg" width={"40px"} onClick={nextCard} />
     </Flex>
   );
 }

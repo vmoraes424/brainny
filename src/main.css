@@ -23,13 +23,15 @@ table {
 }
 
 .LPnav {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  justify-content: space-between;
   width: 100%;
   padding: 0 100px;
   margin-top: 3rem;
+}
+
+@media (width <= 768px) {
+  .LPnav {
+    padding: 0 50px;
+  }
 }
 
 .LPspanHeader {

@@ -67,17 +67,16 @@ export default function Card({ type, selected }: CardProps) {
 
   return (
     <Flex
-      flexDir={"column"}
-      border={"1px solid var(--secundary-color)"}
-      marginTop={"5rem"}
-      borderRadius={"10px"}
-      width={"333px"}
-      height={"491px"}
+      flexDir="column"
+      border="1px solid var(--secundary-color)"
+      borderRadius="10px"
+      padding={"3rem 0"}
+      minWidth={"333px"}
       bgColor={`rgba(255, 255, 255, ${selected ? "0.08" : "0.1"})`}
-      justifyContent={"center"}
-      transform={`scale(${selected ? "1" : "0.9"})`}
-      alignItems={"center"}
-      backdropFilter={"blur(2.5px)"}
+      justifyContent="center"
+      alignItems="center"
+      backdropFilter="blur(2.5px)"
+      marginTop={"3rem"}
     >
       <Text fontSize={"20px"} fontWeight={"400"}>
         {info.title}
