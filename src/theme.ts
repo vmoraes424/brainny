@@ -19,6 +19,10 @@ const theme = extendTheme({
           bg: 'var(--principal-color)',
           color: 'white',
         },
+        'pontogotwo': {
+          bg: 'var(--secundary-color)',
+          color: 'white',
+        },
       },
     },
   },

@@ -8,6 +8,7 @@ export default function Sponsor() {
       marginX={"auto"}
       bgImage={"./bgTexture.png"}
       padding={"0 100px"}
+      marginTop={"4rem"}
     >
       <Img src="./brainny_logo.png" />
       <div className="flex">

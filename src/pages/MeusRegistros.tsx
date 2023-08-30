@@ -12,16 +12,24 @@ import { CREATE_TIME, TIMES_REGISTREDS } from "../graphql";
 import { useToast } from "@chakra-ui/react";
 import UserTable from "../components/Table";
 import Sidebar from "../components/Sidebar";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 export default function MeusRegistros() {
   const userInfo = JSON.parse(localStorage.getItem("userInfo") || "{}");
+  const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [registerTime] = useMutation(CREATE_TIME);
 
   const toast = useToast();
   const currentDate = new Date();
+
+  useEffect(() => {
+    if (!userInfo.jwt) {
+      navigate("/login");
+    }
+  }, []);
 
   const currentHour = `
     ${currentDate.getHours()}:${currentDate

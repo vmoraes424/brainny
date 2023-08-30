@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { EyeFilled, EyeInvisibleFilled } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
-import { onError } from "@apollo/client/link/error";
 import {
   FormControl,
   FormLabel,
@@ -14,7 +13,7 @@ import {
   InputGroup,
   InputRightElement,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { LOGIN_MUTATION } from "../graphql";
@@ -37,15 +36,9 @@ export default function Login() {
     userId: "",
   };
 
-  const errorLink = onError(({ graphQLErrors, networkError }) => {
-    if (graphQLErrors)
-      graphQLErrors.forEach(({ message, locations, path }) =>
-        console.log(
-          `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
-        )
-      );
-    if (networkError) console.log(`[Network error]: ${networkError}`);
-  });
+  useEffect(() => {
+    localStorage.removeItem("userInfo");
+  }, []);
 
   async function loginHandler() {
     try {
@@ -62,7 +55,6 @@ export default function Login() {
     } catch (error) {
       setLoading(false);
       console.error("Erro ao fazer login:", error);
-      console.log(errorLink);
     }
   }
 

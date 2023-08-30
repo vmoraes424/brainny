@@ -71,7 +71,7 @@ export default function UserTable({ filtered }: TableProps) {
         </Thead>
         <Tbody>
           {currentUsers?.map((time: RegisteredTime, idx: number) => (
-            <UserTr idx={idx} time={time} />
+            <UserTr time={time} idx={idx} />
           ))}
         </Tbody>
       </Table>

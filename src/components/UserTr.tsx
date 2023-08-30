@@ -9,7 +9,7 @@ interface userTrProps {
 
 export default function UserTr({ time, idx }: userTrProps) {
   return (
-    <Tr key={idx} bg={"white"} >
+    <Tr key={idx} bg={"white"}>
       <Td>
         <Flex>
           <span className="td-span"></span>
