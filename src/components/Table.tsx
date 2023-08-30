@@ -32,9 +32,7 @@ export default function UserTable({ filtered }: TableProps) {
 
   const userInfo = JSON.parse(localStorage.getItem("userInfo") || "{}");
 
-  const reversedRegisteredTimes = [...(data?.registeredTimes || [])].reverse();
-
-  const filteredUser = reversedRegisteredTimes.filter(
+  const filteredUser = data?.registeredTimes.filter(
     (user: RegisteredUser) => user?.user?.id === userInfo.userId
   );
 
@@ -43,11 +41,11 @@ export default function UserTable({ filtered }: TableProps) {
 
   const currentUsers = filtered
     ? filteredUser.slice(indexOfFirstUser, indexOfLastUser)
-    : reversedRegisteredTimes.slice(indexOfFirstUser, indexOfLastUser);
+    : data?.registeredTimes.slice(indexOfFirstUser, indexOfLastUser);
 
   const totalUsers = filtered
     ? filteredUser.length
-    : reversedRegisteredTimes.length;
+    : data?.registeredTimes.length;
 
   function paginate(pageNumber: number) {
     setCurrentPage(pageNumber);

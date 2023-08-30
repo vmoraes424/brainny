@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import { Flex, Text } from "@chakra-ui/react";
+import { Flex, Img, Text } from "@chakra-ui/react";
 import Navbar from "./components/App/Navbar";
 import Header from "./components/App/Header";
-import Sponsor from "./components/App/Sponsor";
 import Footer from "./components/App/Footer";
 import Slider from "./components/App/Slider";
 
@@ -18,7 +17,25 @@ function App() {
     >
       <Navbar />
       <Header />
-      <Sponsor />
+      <Flex
+        justifyContent={"space-between"}
+        width={"80%"}
+        marginX={"auto"}
+        bgImage={"./bgTexture.png"}
+        padding={"0 100px"}
+        marginTop={"4rem"}
+      >
+        <Img src="./brainny_logo.png" />
+        <Flex>
+          <Img src="./AmoPetLeft.svg" />
+          <Img src="./AmoPet.svg" />
+        </Flex>
+        <Img src="./bus.png" />
+        <Flex>
+          <Img src="./GoStudyLeft.png" />
+          <Img src="./GoStudy.png" />
+        </Flex>
+      </Flex>
       <Flex
         margin={"6rem 0"}
         justifyContent={"center"}

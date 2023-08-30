@@ -52,16 +52,16 @@ export const LOGIN_MUTATION = gql`
 `;
 
 export const TIMES_REGISTREDS = gql`
-    query {
-      registeredTimes {
-        id
-    	  timeRegistered
-    	  user {
-        id 
-        name
-      }
+query {
+  registeredTimes(sort: "timeRegistered:DESC") {
+    timeRegistered
+    user {
+      id
+      name
     }
   }
+}
+
   `
 
 export const CREATE_TIME = gql`

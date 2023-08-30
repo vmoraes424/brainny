@@ -28,6 +28,8 @@ export default function Card({ type, selected }: CardProps) {
       info.registerArea = true;
       info.dashboard = true;
       info.colabAcess = true;
+      info.help = false;
+      info.email = false;
       break;
     case "prata":
       info.title = "Plano Prata";
@@ -36,6 +38,8 @@ export default function Card({ type, selected }: CardProps) {
       info.registerArea = true;
       info.dashboard = true;
       info.colabAcess = true;
+      info.help = false;
+      info.email = false;
       break;
     case "ouro":
       info.title = "Plano Ouro";
@@ -45,6 +49,7 @@ export default function Card({ type, selected }: CardProps) {
       info.dashboard = true;
       info.colabAcess = true;
       info.help = true;
+      info.email = false;
       break;
     case "platina":
       info.title = "Plano Platina";
@@ -109,12 +114,26 @@ export default function Card({ type, selected }: CardProps) {
             </Text>
           )}
         </ListItem>
-        <ListItem>{info.help && <Text>Suporte exclusivo</Text>}</ListItem>
-        <ListItem>{info.email && <Text>Email Corporativo</Text>}</ListItem>
+        <ListItem>
+          {info.help ? (
+            <Text>Suporte exclusivo</Text>
+          ) : (
+            <Text opacity={"0.3"}>Suporte exclusivo</Text>
+          )}
+        </ListItem>
+        <ListItem>
+          {info.email ? (
+            <Text>Email Corporativo</Text>
+          ) : (
+            <Text opacity={"0.3"}>Email Corporativo</Text>
+          )}
+        </ListItem>
       </List>
-      <Button padding={"1.5rem"} variant="pontogotwo">
-        Assinar agora
-      </Button>
+      {selected && (
+        <Button padding={"1.5rem"} variant="pontogotwo">
+          Assinar agora
+        </Button>
+      )}
     </Flex>
   );
 }
