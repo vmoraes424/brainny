@@ -74,7 +74,26 @@ export default function Login() {
     }
   }
   return (
-    <Flex fontFamily={"Poppins"}>
+    <Flex
+      fontFamily={"Poppins"}
+      position="relative"
+      overflow="hidden"
+      zIndex={"1"}
+    >
+      <div
+        className="bg"
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          zIndex: -1,
+          backgroundImage:
+            "radial-gradient(45.56% 37.94% at 33.33% 45.34%, rgba(138, 83, 255, 0.15) 0%, rgba(151, 105, 249, 0.12) 28.85%, rgba(161, 123, 244, 0.10) 71.24%, rgba(153, 109, 248, 0.08) 89.40%, rgba(138, 83, 255, 0.00) 100%)",
+          filter: "blur(250px)",
+        }}
+      />
       <Flex flex={1} justifyContent="center" alignItems="center">
         <Flex
           flexDirection={"column"}

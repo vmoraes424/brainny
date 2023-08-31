@@ -1,4 +1,10 @@
-import { Flex, Img, useBreakpointValue, useMediaQuery } from "@chakra-ui/react";
+import {
+  Button,
+  Flex,
+  Img,
+  useBreakpointValue,
+  useMediaQuery,
+} from "@chakra-ui/react";
 import Card, { TypeCard } from "./Card";
 import { useState } from "react";
 
@@ -30,20 +36,30 @@ export default function Slider() {
     visibleCardsIndices.push(i % cards.length);
   }
   const selectedIndex = visibleCardsIndices[1];
+  const isSingleCardVisible = visibleCardsIndices.length === 1;
 
   return (
     <Flex
       alignItems="center"
-      justifyContent={"center"}
+      justifyContent="center"
       transform={isSmallerThanMd ? "scale(0.8)" : ""}
+      zIndex={100}
+      id="precos"
     >
       <Img src="./leftarrow.svg" width={"40px"} onClick={previousCard} />
-      {visibleCardsIndices.map((index) => (
+      {visibleCardsIndices.map((index, visibleIndex) => (
         <Card
           key={index}
           type={cards[index]}
           selected={index === selectedIndex}
-        />
+          isSmallerThanMd={isSmallerThanMd}
+        >
+          {(isSingleCardVisible || visibleIndex === 1) && (
+            <Button padding={"1.5rem"} variant="pontogotwo">
+              Assinar agora
+            </Button>
+          )}
+        </Card>
       ))}
       <Img src="./rightarrow.svg" width={"40px"} onClick={nextCard} />
     </Flex>

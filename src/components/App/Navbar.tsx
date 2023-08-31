@@ -10,6 +10,7 @@ import {
   Img,
   useDisclosure,
   useMediaQuery,
+  Link as ChakraLink,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -45,10 +46,10 @@ export default function Navbar() {
               <DrawerBody>
                 <Flex gap={4}>
                   <Button variant="link" color="white">
-                    Início
+                    <ChakraLink href="#">Início</ChakraLink>
                   </Button>
                   <Button variant="link" color="white">
-                    Planos
+                    <ChakraLink href="#precos">Planos</ChakraLink>
                   </Button>
                   <Button padding={"0 2rem"} color={"var(--principal-color)"}>
                     <Link to={"/login"}>Fazer login</Link>
@@ -67,12 +68,12 @@ export default function Navbar() {
     <nav className="LPnav">
       <Flex align="center" justify="space-between">
         <Img src="./pontoGoWhite.svg" width={"164px"} />
-        <Flex gap={4}>
+        <Flex gap={12}>
           <Button variant="link" color="white">
-            Início
+            <ChakraLink href="#">Início</ChakraLink>
           </Button>
           <Button variant="link" color="white">
-            Planos
+            <ChakraLink href="#precos">Planos</ChakraLink>
           </Button>
           <Button padding={"0 2rem"} color={"var(--principal-color)"}>
             <Link to={"/login"}>Fazer login</Link>

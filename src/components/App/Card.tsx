@@ -1,9 +1,12 @@
-import { Button, Flex, List, ListItem, Text } from "@chakra-ui/react";
+import { Flex, Img, List, ListItem, Text } from "@chakra-ui/react";
+import { ReactNode } from "react";
 
 export type TypeCard = "bronze" | "prata" | "ouro" | "platina";
 type CardProps = {
   type: TypeCard;
   selected?: boolean;
+  isSmallerThanMd?: boolean;
+  children?: ReactNode;
 };
 
 interface CardInfoProps {
@@ -19,7 +22,12 @@ interface CardInfoProps {
 
 const info = {} as CardInfoProps;
 
-export default function Card({ type, selected }: CardProps) {
+export default function Card({
+  type,
+  selected,
+  isSmallerThanMd,
+  children,
+}: CardProps) {
   switch (type) {
     case "bronze":
       info.title = "Plano Bronze";
@@ -71,7 +79,7 @@ export default function Card({ type, selected }: CardProps) {
       border="1px solid var(--secundary-color)"
       borderRadius="10px"
       padding={"3rem 0"}
-      minWidth={"333px"}
+      width={"333px"}
       bgColor={`rgba(255, 255, 255, ${selected ? "0.08" : "0.1"})`}
       justifyContent="center"
       alignItems="center"
@@ -96,43 +104,78 @@ export default function Card({ type, selected }: CardProps) {
       <List
         spacing={3}
         color={"white"}
-        fontSize={"16px"}
+        fontSize={isSmallerThanMd ? "14px" : "16px"}
         fontWeight={"300"}
         paddingY={"1.5rem"}
       >
         <ListItem>
-          {info.registerArea && <Text>Área de meus registros</Text>}
+          {info.registerArea && (
+            <Text>
+              <Flex gap={2}>
+                {info.registerArea ? (
+                  <Img
+                    src={"./check.svg"} // Substitua pelo caminho da sua imagem
+                    alt="Área de meus registros"
+                  />
+                ) : (
+                  <Img
+                    src={"./x.svg"} // Substitua pelo caminho da sua imagem
+                    alt="Área de meus registros"
+                  />
+                )}
+                Área de meus registros
+              </Flex>
+            </Text>
+          )}
         </ListItem>
-        <ListItem>{info.dashboard && <Text>Dashboard</Text>}</ListItem>
+        <ListItem>
+          {info.dashboard && (
+            <Flex gap={2}>
+              <Img src={"./check.svg"} alt="Área de meus registros" />
+              <Text>Dashboard</Text>
+            </Flex>
+          )}
+        </ListItem>
         <ListItem>
           {info.colabAcess && (
             <Text>
-              {info.colaborators === "Ilimitados"
-                ? "Acesso ilimitado"
-                : `Acesso de ${info.colaborators} colaboradores`}
+              <Flex gap={2}>
+                <Img src={"./check.svg"} alt="Área de meus registros" />
+                {info.colaborators === "Ilimitados"
+                  ? "Acesso ilimitado"
+                  : `Acesso de ${info.colaborators} colaboradores`}
+              </Flex>
             </Text>
           )}
         </ListItem>
         <ListItem>
           {info.help ? (
-            <Text>Suporte exclusivo</Text>
+            <Flex gap={2}>
+              <Img src={"./check.svg"} alt="Área de meus registros" />
+              <Text>Suporte exclusivo</Text>
+            </Flex>
           ) : (
-            <Text opacity={"0.3"}>Suporte exclusivo</Text>
+            <Flex gap={2}>
+              <Img src={"./x.svg"} alt="Área de meus registros" />
+              <Text opacity={"0.3"}>Suporte exclusivo</Text>
+            </Flex>
           )}
         </ListItem>
         <ListItem>
           {info.email ? (
-            <Text>Email Corporativo</Text>
+            <Flex gap={2}>
+              <Img src={"./check.svg"} alt="Área de meus registros" />
+              <Text>Email corporativo</Text>
+            </Flex>
           ) : (
-            <Text opacity={"0.3"}>Email Corporativo</Text>
+            <Flex gap={2}>
+              <Img src={"./x.svg"} alt="Área de meus registros" />
+              <Text opacity={"0.3"}>Email corporativo</Text>
+            </Flex>
           )}
         </ListItem>
       </List>
-      {selected && (
-        <Button padding={"1.5rem"} variant="pontogotwo">
-          Assinar agora
-        </Button>
-      )}
+      {children}
     </Flex>
   );
 }

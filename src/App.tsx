@@ -30,7 +30,21 @@ function App() {
       textColor={"white"}
       fontFamily={"Poppins"}
     >
+      <Img
+        src="./fumaca1.png"
+        opacity={"0.5"}
+        position={"absolute"}
+        right={0}
+        top={0}
+      />
       <Navbar />
+      <Img
+        src="./fumaca2.png"
+        opacity={"0.4"}
+        position={"absolute"}
+        left={0}
+        bottom={"25%"}
+      />
       <Header />
       <SimpleGrid
         width={isSmallerThanMd ? "100%" : "80%"}
@@ -81,6 +95,13 @@ function App() {
         </Flex>
         <Slider />
       </Flex>
+      <Img
+        src="./fumaca3.png"
+        opacity={"0.4"}
+        position={"absolute"}
+        right={0}
+        bottom={"10%"}
+      />
       <Footer />
     </Flex>
   );
