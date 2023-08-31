@@ -26,7 +26,7 @@ A Landing Page tem como objetivo promover e comercializar o sistema de registro 
 ## Instruções de Uso
 
 1. Clone este repositório para o seu ambiente local.
-2. Navegue para a pasta do projeto: `cd nome-do-seu-projeto`.
+2. Navegue para a pasta do projeto: `cd brainny`.
 3. Instale as dependências utilizando o npm ou yarn:
    ```sh
    npm install
@@ -45,9 +45,9 @@ A Landing Page tem como objetivo promover e comercializar o sistema de registro 
 
 - `src`: Contém o código-fonte do projeto.
   - `components`: Contém os componentes reutilizáveis.
-  - `pages`: Contém as páginas do sistema e da landing page.
+  - `pages`: Contém as páginas do sistema.
   - `graphql`: Contém as definições de consultas e mutações GraphQL.
-  - `App.tsx`: Landing Page.
+  - `App.tsx`: Contém a página da Landing Page.
 
 | Página            | Descrição                                                                                   | Acesso          |
 |-------------------|---------------------------------------------------------------------------------------------|-----------------|
