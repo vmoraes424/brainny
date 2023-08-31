@@ -11,7 +11,6 @@ interface RegisteredUser {
     id: string;
   };
 }
-
 export interface RegisteredTime {
   id: number;
   user: {
@@ -32,19 +31,19 @@ export default function UserTable({ filtered }: TableProps) {
 
   const userInfo = JSON.parse(localStorage.getItem("userInfo") || "{}");
 
+  const indexOfLastUser = currentPage * usersPerPage;
+  const indexOfFirstUser = indexOfLastUser - usersPerPage;
   const filteredUser = data?.registeredTimes.filter(
     (user: RegisteredUser) => user?.user?.id === userInfo.userId
   );
 
-  const indexOfLastUser = currentPage * usersPerPage;
-  const indexOfFirstUser = indexOfLastUser - usersPerPage;
-
+  // Verifica se os dados foram carregados antes de acessar currentUsers e totalUsers
   const currentUsers = filtered
-    ? filteredUser.slice(indexOfFirstUser, indexOfLastUser)
+    ? filteredUser?.slice(indexOfFirstUser, indexOfLastUser)
     : data?.registeredTimes.slice(indexOfFirstUser, indexOfLastUser);
 
   const totalUsers = filtered
-    ? filteredUser.length
+    ? filteredUser?.length
     : data?.registeredTimes.length;
 
   function paginate(pageNumber: number) {
